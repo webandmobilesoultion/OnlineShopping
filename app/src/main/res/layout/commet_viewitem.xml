@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/star_userimagebutton"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/man"
+        app:siBorderWidth="1dp"
+        app:siBorderColor="#b6818289"
+        android:layout_marginLeft="20dp"
+        android:scaleType="fitXY"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/username_contenttextView"
+        android:layout_alignBottom="@+id/star_userimagebutton"
+        android:layout_toRightOf="@+id/star_userimagebutton"
+        android:layout_toEndOf="@+id/star_userimagebutton"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/time_textView"
+        android:layout_alignBottom="@+id/username_contenttextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#b6818289"
+        android:textSize="13dp"
+        android:gravity="bottom"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/content_commet_textView"
+        android:layout_below="@+id/time_textView"
+        android:layout_toRightOf="@+id/star_userimagebutton"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_alignRight="@+id/time_textView"
+        android:layout_alignEnd="@+id/time_textView"
+        android:layout_marginRight="70dp"
+        android:textSize="13dp"
+        android:textColor="#b6000000" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignBottom="@+id/username_contenttextView"
+        android:layout_toLeftOf="@+id/time_textView"
+        android:layout_toStartOf="@+id/time_textView"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/clock"
+        android:layout_marginBottom="3dp" />
+
+</RelativeLayout>

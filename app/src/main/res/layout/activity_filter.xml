@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fonnditt.mobile_perfect.founditt.FilterActivity">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout"
+        android:background="#ff2b999c">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Filter"
+            android:id="@+id/filter_title_textView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fffff5f8"
+            android:typeface="sans" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/back_fillter_imageButton"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back"
+            android:background="@null" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/selelct_imageButton"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/complete"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_above="@+id/linearLayout7">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_listView"
+            android:choiceMode="multipleChoice"
+            android:layout_centerHorizontal="true"
+            android:background="@null" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout7"
+        android:background="@drawable/bottom">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/home_filter_imageButton"
+
+            android:src="@drawable/home_bottom"
+            android:background="@null"
+            android:layout_weight="0.5" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/camera_filter_imageButton"
+
+            android:background="@null"
+            android:src="@drawable/product"
+            android:layout_weight="0.5" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/alert_filter_imagebutton"
+
+            android:background="@null"
+            android:src="@drawable/bell"
+            android:layout_weight="0.5" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/profile_filter_imageButton"
+
+            android:background="@null"
+            android:src="@drawable/profile"
+            android:layout_weight="0.5" />
+        </LinearLayout>
+
+</RelativeLayout>

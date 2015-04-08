@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fonnditt.mobile_perfect.founditt.SearchActivity">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout"
+        android:background="#ff2b999c">
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:id="@+id/search_editText"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:background="@null"
+            android:hint="Retailer"
+            android:inputType="textCapWords" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/back_search_imageButton"
+            android:layout_alignParentStart="false"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/back"
+            android:background="@null" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout13"
+        android:layout_above="@+id/boderlayout"
+        android:layout_below="@+id/relativeLayout">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/search_listView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@null" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/boderlayout"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/linearLayout10"
+            android:background="@drawable/bottom">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/home_search_imageButton"
+
+                android:src="@drawable/home_bottom"
+                android:background="@null"
+                android:layout_weight="0.5" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/camera_search_imageButton"
+
+                android:background="@null"
+                android:src="@drawable/product"
+                android:layout_weight="0.5" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/alert_search_imagebutton"
+
+                android:background="@null"
+                android:src="@drawable/bell"
+                android:layout_weight="0.5" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/profile_search_imageButton"
+
+                android:background="@null"
+                android:src="@drawable/profile"
+                android:layout_weight="0.5" />
+            </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
