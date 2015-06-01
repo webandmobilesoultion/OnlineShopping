@@ -34,6 +34,6 @@ dependencies {
     compile 'com.edmodo:cropper:1.0.1'
     compile project(':crop')
     compile project(':switchlibrary')
-    compile 'com.pkmmte.view:circularimageview:1.1'
+    compile 'de.hdodenhof:circleimageview:1.3.0'
 
 }

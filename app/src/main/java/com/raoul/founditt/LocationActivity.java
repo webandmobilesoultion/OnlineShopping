@@ -29,6 +29,7 @@ public class LocationActivity extends Activity {
     ImageButton location_saveimagebut;
     private List<catagorysearchitem> data;
     private catagoryListAdapter adapter;
+    TextView search_title;
     Typeface font;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,10 @@ public class LocationActivity extends Activity {
         categorys = datagetintent.getStringExtra("cotagoryresult");
         tagling=datagetintent.getStringExtra("tagline");
         retailerstr=datagetintent.getStringExtra("retailer");
+        search_title=(TextView)findViewById(R.id.search_title_textView);
+        search_title.setTypeface(font);
         font = Typeface.createFromAsset(getAssets(), "Questrial-Regular.ttf");
+        search_title.setTypeface(font);
         data = new ArrayList<catagorysearchitem>();
         data.add(new catagorysearchitem(1,"Melbourne"));
         data.add(new catagorysearchitem(2,"Sydney"));

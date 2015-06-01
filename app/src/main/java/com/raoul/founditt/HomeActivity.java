@@ -98,10 +98,12 @@ public class HomeActivity extends Activity {
     ParseUser currentuser;
     private AdView adView;
     private InterstitialAd mInterstitialAd;
-
+    String userid;
     SharedPreferences.Editor editor;
     SharedPreferences preferences;
     String filtercontente;
+    ParseUser search_user;
+    String photoID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -116,6 +118,9 @@ public class HomeActivity extends Activity {
         follows = new ArrayList<String>();
         Intent filterintent=getIntent();
         fillterstring=filterintent.getStringExtra("filter");
+        userid=filterintent.getStringExtra("userID");
+        photoID=filterintent.getStringExtra("photoID");
+
         font = Typeface.createFromAsset(getAssets(), "Questrial-Regular.ttf");
         currentuser=ParseUser.getCurrentUser();
         if (!filtercontente.equals("")){
@@ -164,6 +169,15 @@ public class HomeActivity extends Activity {
 //
 //
 //        installation.saveInBackground();
+        if (!(userid ==null)){
+            ParseQuery<ParseUser> query=ParseUser.getQuery();
+            try {
+                search_user=query.get(userid);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         new RemoteDataTask().execute();
         ImageButton logoutbut = (ImageButton) findViewById(R.id.home_imageButton);
@@ -195,7 +209,7 @@ public class HomeActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent;
-                intent = new Intent(HomeActivity.this, SearchActivity.class);
+                intent = new Intent(HomeActivity.this, SearchFuntionActivity.class);
 
 
                 startActivity(intent);
@@ -273,7 +287,11 @@ public class HomeActivity extends Activity {
 //            }
 //        });
     }
+    @Override
+    public void onBackPressed()
+    {
 
+    }
     private void makeMeRequest() {
 
         Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
@@ -414,231 +432,483 @@ public class HomeActivity extends Activity {
         protected Void doInBackground(Void... params) {
             // Create the array
             data = new ArrayList<homeitem>();
+            if (!(photoID ==null)){
 
-            try {
-                ParseQuery<ParseObject> photosFromCurrentUserQuery = ParseQuery.getQuery("Photo");
-                if(!(fillterstring ==null)){
-
-                    photosFromCurrentUserQuery.whereContainedIn("category", limits);
-//                    photosFromCurrentUserQuery.whereEqualTo("category",fillterstring);
-                }
-                if(!(retailerstring ==null)){
-
-                    photosFromCurrentUserQuery.whereEqualTo("retail",retailerstring);
-                }
-
-                photosFromCurrentUserQuery.whereExists("image");
-                photosFromCurrentUserQuery.whereEqualTo("expflag","false");
-                photosFromCurrentUserQuery.include("user");
-                photosFromCurrentUserQuery.orderByDescending("createdAt");
-                // Set the limit of objects to show
-//                photosFromCurrentUserQuery.setLimit(setlimite);
-                ob = photosFromCurrentUserQuery.find();
-                for (ParseObject country : ob) {
-                    // Locate images in flag column
-                    photo=country;
-                    final homeitem map = new homeitem();
-                    int inappcount=country.getInt("inapp");
-                    if (inappcount<4){
-
-                        Date today=new Date(System.currentTimeMillis());
-                        Date c = (Date) country.get("expiry");
-
-
-                        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-
-                        String formattedDate = df.format(c);
-                        if(today.compareTo(c)==0){
-                            map.setExpirdate("EXPIRED ");
-                            ParseFile image = (ParseFile) country.get("image");
-                            ParseUser homeuser=country.getParseUser("user");
-
-
-                            map.setUserID(homeuser.getObjectId());
-                            map.setID(country.getObjectId());
-                            map.setusername((String) homeuser.get("displayName"));
-                            if(!((String) homeuser.get("name") ==null)){
-                                map.setUserrealname((String) homeuser.get("name"));
-                            }
-                            else {
-                                map.setUserrealname("");
-                            }
-
-
-                            map.setCategory((String) country.get("category"));
-                            map.setTagline((String) country.get("tagline"));
+                Log.d("photoID",photoID);
+                ParseQuery<ParseObject> photoQuery = ParseQuery.getQuery("Photo");
 
 
 
+                photoQuery.include("user");
 
 
-                            if (!( homeuser.get("userphoto") ==null)){
+
+                photoQuery.getInBackground(photoID, new GetCallback<ParseObject>() {
+                    public void done(ParseObject country, ParseException e) {
+                        if (e == null) {
+                            photo=country;
+                            final homeitem map = new homeitem();
+                            int inappcount=country.getInt("inapp");
+                            if (inappcount<4){
+
+                                Date today=new Date(System.currentTimeMillis());
+                                Date c = (Date) country.get("expiry");
 
 
-                                if(!(homeuser.get("facebookId") ==null)){
-                                    if (homeuser.get("facebook").equals("true")){
+                                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
-                                        String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
-                                        map.setUserimageurl(url);
+                                String formattedDate = df.format(c);
+                                if(today.compareTo(c)==0){
+                                    map.setExpirdate("EXPIRED ");
+                                    ParseFile image = (ParseFile) country.get("image");
+                                    ParseUser homeuser=country.getParseUser("user");
+
+
+                                    map.setUserID(homeuser.getObjectId());
+                                    map.setID(country.getObjectId());
+                                    map.setusername((String) homeuser.get("displayName"));
+                                    if(!((String) homeuser.get("name") ==null)){
+                                        map.setUserrealname((String) homeuser.get("name"));
                                     }
                                     else {
-
-                                        ParseFile userimage = (ParseFile) homeuser.get("userphoto");
-                                        map.setUserimageurl(userimage.getUrl());
-
+                                        map.setUserrealname("");
                                     }
 
-                                }
 
-                                else {
-
-                                    ParseFile userimage = (ParseFile) homeuser.get("userphoto");
-                                    map.setUserimageurl(userimage.getUrl());
-
-                                }
-
-                            }
-                            else{
-                                if(!(homeuser.get("facebookId") ==null)){
-                                    String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
-                                    map.setUserimageurl(url);
-                                }
-                                else {
-                                    map.setUserimageurl("");
-                                }
-                            }
-
-
-
-                            map.setIamgeURL(image.getUrl());
-                            map.setLocation((String) country.get("location"));
-                            map.setRetail((String) country.get("retail"));
-                            if(!(photo.<String>getList("userlike") ==null)){
-                                likes=(ArrayList<String>)photo.get("userlike");
-                            }
-                            if(!(photo.<String>getList("userfollow") ==null)){
-                                follows=(ArrayList<String>)photo.get("userfollow");
-
-                            }
-                            map.setComment(Integer.toString(country.getInt("commentnumber")));
-                            map.setLike(Integer.toString(likes.size()));
-                            String likecompare=likes.toString();
-                            if(likecompare.contains(currentuser.getObjectId())){
-                                map.setLikeflag("true");
-                            }
-                            else {
-                                map.setLikeflag("false");
-                            }
-                            likes.clear();
-
-                            String followcompare=follows.toString();
-                            if(followcompare.contains(currentuser.getObjectId())){
-                                map.setFollowflag("true");
-                            }
-                            else {
-                                map.setFollowflag("false");
-                            }
-                            follows.clear();
-                            data.add(map);
-                        }
-                        else if(today.compareTo(c)<0) {
-
-                            map.setExpirdate("EXP: " + formattedDate);
-                            ParseFile image = (ParseFile) country.get("image");
-                            ParseUser homeuser=country.getParseUser("user");
-
-
-                            map.setUserID(homeuser.getObjectId());
-                            map.setID(country.getObjectId());
-                            map.setusername((String) homeuser.get("displayName"));
-                            if(!((String) homeuser.get("name") ==null)){
-                                map.setUserrealname((String) homeuser.get("name"));
-                            }
-                            else {
-                                map.setUserrealname("");
-                            }
-
-
-                            map.setCategory((String) country.get("category"));
-                            map.setTagline((String) country.get("tagline"));
+                                    map.setCategory((String) country.get("category"));
+                                    map.setTagline((String) country.get("tagline"));
 
 
 
 
 
-                            if (!( homeuser.get("userphoto") ==null)){
+                                    if (!( homeuser.get("userphoto") ==null)){
 
 
-                                if(!(homeuser.get("facebookId") ==null)){
-                                    if (homeuser.get("facebook").equals("true")){
+                                        if(!(homeuser.get("facebookId") ==null)){
+                                            if (homeuser.get("facebook").equals("true")){
 
-                                        String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
-                                        map.setUserimageurl(url);
+                                                String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                                map.setUserimageurl(url);
+                                            }
+                                            else {
+
+                                                ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                                map.setUserimageurl(userimage.getUrl());
+
+                                            }
+
+                                        }
+
+                                        else {
+
+                                            ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                            map.setUserimageurl(userimage.getUrl());
+
+                                        }
+
+                                    }
+                                    else{
+                                        if(!(homeuser.get("facebookId") ==null)){
+                                            String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                            map.setUserimageurl(url);
+                                        }
+                                        else {
+                                            map.setUserimageurl("");
+                                        }
+                                    }
+
+
+
+                                    map.setIamgeURL(image.getUrl());
+                                    map.setLocation((String) country.get("location"));
+                                    map.setRetail((String) country.get("retail"));
+                                    if(!(country.<String>getList("userlike") ==null)){
+                                        likes=(ArrayList<String>)country.get("userlike");
+                                    }
+                                    if(!(country.<String>getList("userfollow") ==null)){
+                                        follows=(ArrayList<String>)country.get("userfollow");
+
+                                    }
+                                    map.setComment(Integer.toString(country.getInt("commentnumber")));
+                                    map.setLike(Integer.toString(likes.size()));
+                                    String likecompare=likes.toString();
+                                    if(likecompare.contains(currentuser.getObjectId())){
+                                        map.setLikeflag("true");
                                     }
                                     else {
+                                        map.setLikeflag("false");
+                                    }
+                                    likes.clear();
 
-                                        ParseFile userimage = (ParseFile) homeuser.get("userphoto");
-                                        map.setUserimageurl(userimage.getUrl());
+                                    String followcompare=follows.toString();
+                                    if(followcompare.contains(currentuser.getObjectId())){
+                                        map.setFollowflag("true");
+                                    }
+                                    else {
+                                        map.setFollowflag("false");
+                                    }
+                                    follows.clear();
+                                    data.add(map);
+                                }
+                                else if(today.compareTo(c)<0) {
 
+                                    map.setExpirdate("EXP: " + formattedDate);
+                                    ParseFile image = (ParseFile) country.get("image");
+                                    ParseUser homeuser=country.getParseUser("user");
+
+
+                                    map.setUserID(homeuser.getObjectId());
+                                    map.setID(country.getObjectId());
+                                    map.setusername((String) homeuser.get("displayName"));
+                                    if(!((String) homeuser.get("name") ==null)){
+                                        map.setUserrealname((String) homeuser.get("name"));
+                                    }
+                                    else {
+                                        map.setUserrealname("");
                                     }
 
+
+                                    map.setCategory((String) country.get("category"));
+                                    map.setTagline((String) country.get("tagline"));
+
+
+
+
+
+                                    if (!( homeuser.get("userphoto") ==null)){
+
+
+                                        if(!(homeuser.get("facebookId") ==null)){
+                                            if (homeuser.get("facebook").equals("true")){
+
+                                                String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                                map.setUserimageurl(url);
+                                            }
+                                            else {
+
+                                                ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                                map.setUserimageurl(userimage.getUrl());
+
+                                            }
+
+                                        }
+
+                                        else {
+
+                                            ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                            map.setUserimageurl(userimage.getUrl());
+
+                                        }
+
+                                    }
+                                    else{
+                                        if(!(homeuser.get("facebookId") ==null)){
+                                            String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                            map.setUserimageurl(url);
+                                        }
+                                        else {
+                                            map.setUserimageurl("");
+                                        }
+                                    }
+
+
+
+                                    map.setIamgeURL(image.getUrl());
+                                    map.setLocation((String) country.get("location"));
+                                    map.setRetail((String) country.get("retail"));
+                                    if(!(country.<String>getList("userlike") ==null)){
+                                        likes=(ArrayList<String>)country.get("userlike");
+                                    }
+                                    if(!(country.<String>getList("userfollow") ==null)){
+                                        follows=(ArrayList<String>)country.get("userfollow");
+
+                                    }
+                                    map.setComment(Integer.toString(country.getInt("commentnumber")));
+                                    map.setLike(Integer.toString(likes.size()));
+                                    String likecompare=likes.toString();
+                                    if(likecompare.contains(currentuser.getObjectId())){
+                                        map.setLikeflag("true");
+                                    }
+                                    else {
+                                        map.setLikeflag("false");
+                                    }
+                                    likes.clear();
+
+                                    String followcompare=follows.toString();
+                                    if(followcompare.contains(currentuser.getObjectId())){
+                                        map.setFollowflag("true");
+                                    }
+                                    else {
+                                        map.setFollowflag("false");
+                                    }
+                                    follows.clear();
+                                    data.add(map);
+
                                 }
 
-                                else {
-
-                                    ParseFile userimage = (ParseFile) homeuser.get("userphoto");
-                                    map.setUserimageurl(userimage.getUrl());
-
-                                }
 
                             }
-                            else{
-                                if(!(homeuser.get("facebookId") ==null)){
-                                    String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
-                                    map.setUserimageurl(url);
-                                }
-                                else {
-                                    map.setUserimageurl("");
-                                }
-                            }
+
+
+//                    ParseQuery<ParseObject> inappequery = ParseQuery.getQuery("Inappropriate");
+//                    inappequery.whereEqualTo("photo", photo);
+
+
+//                    if(inappequery.count()>=3){
+//                       photo.deleteInBackground();
+//                    }
+//                    else {
 
 
 
-                            map.setIamgeURL(image.getUrl());
-                            map.setLocation((String) country.get("location"));
-                            map.setRetail((String) country.get("retail"));
-                            if(!(photo.<String>getList("userlike") ==null)){
-                                likes=(ArrayList<String>)photo.get("userlike");
-                            }
-                            if(!(photo.<String>getList("userfollow") ==null)){
-                                follows=(ArrayList<String>)photo.get("userfollow");
 
-                            }
-                            map.setComment(Integer.toString(country.getInt("commentnumber")));
-                            map.setLike(Integer.toString(likes.size()));
-                            String likecompare=likes.toString();
-                            if(likecompare.contains(currentuser.getObjectId())){
-                                map.setLikeflag("true");
-                            }
-                            else {
-                                map.setLikeflag("false");
-                            }
-                            likes.clear();
-
-                            String followcompare=follows.toString();
-                            if(followcompare.contains(currentuser.getObjectId())){
-                                map.setFollowflag("true");
-                            }
-                            else {
-                                map.setFollowflag("false");
-                            }
-                            follows.clear();
-                            data.add(map);
-
+//                    }
                         }
-
 
                     }
+                });
+
+                // Set the limit of objects to show
+//                photosFromCurrentUserQuery.setLimit(setlimite);
+
+
+
+
+
+
+
+            }
+            else {
+
+
+                try {
+                    ParseQuery<ParseObject> photosFromCurrentUserQuery = ParseQuery.getQuery("Photo");
+                    if(!(fillterstring ==null)){
+
+                        photosFromCurrentUserQuery.whereContainedIn("category", limits);
+//                    photosFromCurrentUserQuery.whereEqualTo("category",fillterstring);
+                    }
+                    if(!(retailerstring ==null)){
+
+                        photosFromCurrentUserQuery.whereEqualTo("retail",retailerstring);
+                    }
+                    if(!(search_user ==null)){
+
+                        photosFromCurrentUserQuery.whereEqualTo("user",search_user);
+                    }
+                    photosFromCurrentUserQuery.whereExists("image");
+                    photosFromCurrentUserQuery.whereEqualTo("expflag","false");
+                    photosFromCurrentUserQuery.include("user");
+                    photosFromCurrentUserQuery.orderByDescending("createdAt");
+                    // Set the limit of objects to show
+//                photosFromCurrentUserQuery.setLimit(setlimite);
+                    ob = photosFromCurrentUserQuery.find();
+                    for (ParseObject country : ob) {
+                        // Locate images in flag column
+                        photo=country;
+                        final homeitem map = new homeitem();
+                        int inappcount=country.getInt("inapp");
+                        if (inappcount<4){
+
+                            Date today=new Date(System.currentTimeMillis());
+                            Date c = (Date) country.get("expiry");
+
+
+                            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+                            String formattedDate = df.format(c);
+                            if(today.compareTo(c)==0){
+                                map.setExpirdate("EXPIRED ");
+                                ParseFile image = (ParseFile) country.get("image");
+                                ParseUser homeuser=country.getParseUser("user");
+
+
+                                map.setUserID(homeuser.getObjectId());
+                                map.setID(country.getObjectId());
+                                map.setusername((String) homeuser.get("displayName"));
+                                if(!((String) homeuser.get("name") ==null)){
+                                    map.setUserrealname((String) homeuser.get("name"));
+                                }
+                                else {
+                                    map.setUserrealname("");
+                                }
+
+
+                                map.setCategory((String) country.get("category"));
+                                map.setTagline((String) country.get("tagline"));
+
+
+
+
+
+                                if (!( homeuser.get("userphoto") ==null)){
+
+
+                                    if(!(homeuser.get("facebookId") ==null)){
+                                        if (homeuser.get("facebook").equals("true")){
+
+                                            String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                            map.setUserimageurl(url);
+                                        }
+                                        else {
+
+                                            ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                            map.setUserimageurl(userimage.getUrl());
+
+                                        }
+
+                                    }
+
+                                    else {
+
+                                        ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                        map.setUserimageurl(userimage.getUrl());
+
+                                    }
+
+                                }
+                                else{
+                                    if(!(homeuser.get("facebookId") ==null)){
+                                        String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                        map.setUserimageurl(url);
+                                    }
+                                    else {
+                                        map.setUserimageurl("");
+                                    }
+                                }
+
+
+
+                                map.setIamgeURL(image.getUrl());
+                                map.setLocation((String) country.get("location"));
+                                map.setRetail((String) country.get("retail"));
+                                if(!(photo.<String>getList("userlike") ==null)){
+                                    likes=(ArrayList<String>)photo.get("userlike");
+                                }
+                                if(!(photo.<String>getList("userfollow") ==null)){
+                                    follows=(ArrayList<String>)photo.get("userfollow");
+
+                                }
+                                map.setComment(Integer.toString(country.getInt("commentnumber")));
+                                map.setLike(Integer.toString(likes.size()));
+                                String likecompare=likes.toString();
+                                if(likecompare.contains(currentuser.getObjectId())){
+                                    map.setLikeflag("true");
+                                }
+                                else {
+                                    map.setLikeflag("false");
+                                }
+                                likes.clear();
+
+                                String followcompare=follows.toString();
+                                if(followcompare.contains(currentuser.getObjectId())){
+                                    map.setFollowflag("true");
+                                }
+                                else {
+                                    map.setFollowflag("false");
+                                }
+                                follows.clear();
+                                data.add(map);
+                            }
+                            else if(today.compareTo(c)<0) {
+
+                                map.setExpirdate("EXP: " + formattedDate);
+                                ParseFile image = (ParseFile) country.get("image");
+                                ParseUser homeuser=country.getParseUser("user");
+
+
+                                map.setUserID(homeuser.getObjectId());
+                                map.setID(country.getObjectId());
+                                map.setusername((String) homeuser.get("displayName"));
+                                if(!((String) homeuser.get("name") ==null)){
+                                    map.setUserrealname((String) homeuser.get("name"));
+                                }
+                                else {
+                                    map.setUserrealname("");
+                                }
+
+
+                                map.setCategory((String) country.get("category"));
+                                map.setTagline((String) country.get("tagline"));
+
+
+
+
+
+                                if (!( homeuser.get("userphoto") ==null)){
+
+
+                                    if(!(homeuser.get("facebookId") ==null)){
+                                        if (homeuser.get("facebook").equals("true")){
+
+                                            String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                            map.setUserimageurl(url);
+                                        }
+                                        else {
+
+                                            ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                            map.setUserimageurl(userimage.getUrl());
+
+                                        }
+
+                                    }
+
+                                    else {
+
+                                        ParseFile userimage = (ParseFile) homeuser.get("userphoto");
+                                        map.setUserimageurl(userimage.getUrl());
+
+                                    }
+
+                                }
+                                else{
+                                    if(!(homeuser.get("facebookId") ==null)){
+                                        String url="https://graph.facebook.com/"+homeuser.get("facebookId")+"/picture?type=large";
+                                        map.setUserimageurl(url);
+                                    }
+                                    else {
+                                        map.setUserimageurl("");
+                                    }
+                                }
+
+
+
+                                map.setIamgeURL(image.getUrl());
+                                map.setLocation((String) country.get("location"));
+                                map.setRetail((String) country.get("retail"));
+                                if(!(photo.<String>getList("userlike") ==null)){
+                                    likes=(ArrayList<String>)photo.get("userlike");
+                                }
+                                if(!(photo.<String>getList("userfollow") ==null)){
+                                    follows=(ArrayList<String>)photo.get("userfollow");
+
+                                }
+                                map.setComment(Integer.toString(country.getInt("commentnumber")));
+                                map.setLike(Integer.toString(likes.size()));
+                                String likecompare=likes.toString();
+                                if(likecompare.contains(currentuser.getObjectId())){
+                                    map.setLikeflag("true");
+                                }
+                                else {
+                                    map.setLikeflag("false");
+                                }
+                                likes.clear();
+
+                                String followcompare=follows.toString();
+                                if(followcompare.contains(currentuser.getObjectId())){
+                                    map.setFollowflag("true");
+                                }
+                                else {
+                                    map.setFollowflag("false");
+                                }
+                                follows.clear();
+                                data.add(map);
+
+                            }
+
+
+                        }
 
 
 //                    ParseQuery<ParseObject> inappequery = ParseQuery.getQuery("Inappropriate");
@@ -656,11 +926,15 @@ public class HomeActivity extends Activity {
 //                    }
 
 
+                    }
+                } catch (ParseException e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
                 }
-            } catch (ParseException e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+
+
             }
+
             return null;
         }
 
@@ -966,7 +1240,7 @@ public  class myadapter   extends BaseAdapter
 //            if (view==null){
                 holder = new ViewHolder();
                 view = inflater.inflate(R.layout.home_viewitem, null);
-                holder.usernametextview = (TextView) view.findViewById(R.id.username_hometextView);
+//                holder.usernametextview = (TextView) view.findViewById(R.id.username_hometextView);
 
                 holder.expiredatetextview = (TextView) view.findViewById(R.id.expierdate_hometextView);
 
@@ -1000,16 +1274,17 @@ public  class myadapter   extends BaseAdapter
             holder.commenttextview.setTypeface(font);
             holder.taglinetextview.setTypeface(font);
             holder.expiredatetextview.setTypeface(font);
-            holder.usernametextview.setTypeface(font);
-            holder.usernametextview.setText(worldpopulationlist.get(position).getusername());
+//            holder.usernametextview.setTypeface(font);
+//            holder.usernametextview.setText(worldpopulationlist.get(position).getusername());
             holder.expiredatetextview.setText(worldpopulationlist.get(position).getExpirdate());
-            holder.taglinetextview.setText(worldpopulationlist.get(position).getTagline());
+            holder.taglinetextview.setText("#"+worldpopulationlist.get(position).getTagline());
             holder.liketextview.setText(worldpopulationlist.get(position).getLike());
             holder.commenttextview.setText(worldpopulationlist.get(position).getComment());
             holder.userrealname_textview.setText(worldpopulationlist.get(position).getUserrealname());
             holder.retailtextview.setText(worldpopulationlist.get(position).getRetail());
 //            Log.d("sdfasdfadfadfasdfadfadfasdfadf",worldpopulationlist.get(position).getIamgeURL());
 //              imageLoader.DisplayImage(worldpopulationlist.get(position).getIamgeURL(), holder.productimageview);
+
             Picasso.with(context).load(worldpopulationlist.get(position).getIamgeURL()).into(holder.productimageview);
             if(!worldpopulationlist.get(position).getUserimageurl().equals("")){
 //                imageLoader.DisplayImage(worldpopulationlist.get(position).getUserimageurl(), holder.userimageview);
@@ -1308,6 +1583,10 @@ public  class myadapter   extends BaseAdapter
 
                                             ParseUser touser=photo_origin.getParseUser("user");
                                             ParseObject follow = new ParseObject("Follow");
+                                            ParseACL acl = new ParseACL();
+                                            acl.setPublicReadAccess(true);
+                                            acl.setPublicWriteAccess(true);
+                                            follow.setACL(acl);
                                             follow.put("user", ParseUser.getCurrentUser());
                                             follow.put("photo", photo);
                                             follow.saveInBackground();
@@ -1369,27 +1648,27 @@ public  class myadapter   extends BaseAdapter
                 }
 
             });
-           holder.productimageview.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
+//           holder.productimageview.setOnClickListener(new View.OnClickListener() {
+//               @Override
+//               public void onClick(View v) {
+////                   Intent zoom = new Intent(HomeActivity.this, CommentActivity.class);
+////                   zoom.putExtra("photoID", worldpopulationlist.get(position).getID());
+////                   startActivity(zoom);
+////                   // Toast.makeText(HomeActivity.this,worldpopulationlist.get(position).getID(),Toast.LENGTH_SHORT).show();
+////
+////                   overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//
+//
+//
 //                   Intent zoom = new Intent(HomeActivity.this, CommentActivity.class);
 //                   zoom.putExtra("photoID", worldpopulationlist.get(position).getID());
 //                   startActivity(zoom);
 //                   // Toast.makeText(HomeActivity.this,worldpopulationlist.get(position).getID(),Toast.LENGTH_SHORT).show();
 //
 //                   overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
-
-
-                   Intent zoom = new Intent(HomeActivity.this, CommentActivity.class);
-                   zoom.putExtra("photoID", worldpopulationlist.get(position).getID());
-                   startActivity(zoom);
-                   // Toast.makeText(HomeActivity.this,worldpopulationlist.get(position).getID(),Toast.LENGTH_SHORT).show();
-
-                   overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
-               }
-           });
+//
+//               }
+//           });
             holder.shareimagebut.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -1626,7 +1905,7 @@ public  class myadapter   extends BaseAdapter
         }
 
      private class ViewHolder {
-            public TextView usernametextview;
+//            public TextView usernametextview;
             public TextView expiredatetextview;
             public TextView taglinetextview;
             public TextView liketextview;

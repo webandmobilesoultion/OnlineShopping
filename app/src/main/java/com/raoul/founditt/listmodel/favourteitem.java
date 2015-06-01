@@ -6,6 +6,15 @@ package com.raoul.founditt.listmodel;
 public class favourteitem {
     String inmageurl;
     String imageID;
+    String followID;
+
+    public String getFollowID() {
+        return followID;
+    }
+
+    public void setFollowID(String followID) {
+        this.followID = followID;
+    }
 
     public void setImageID(String imageID) {
         this.imageID = imageID;

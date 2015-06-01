@@ -294,23 +294,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/logout_imageButton"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:src="@drawable/log_out"
                 android:background="@null"
-                android:layout_marginLeft="10dp" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/upgrade_imageButton"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/upgrade_but"
-                android:background="@null"
-                android:layout_marginRight="10dp" />
+                android:layout_centerHorizontal="true" />
 
 
         </RelativeLayout>

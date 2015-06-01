@@ -516,7 +516,8 @@ public class CommentActivity extends Activity {
         searchbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(CommentActivity.this,SearchActivity.class);
+                Intent intent;
+                intent = new Intent(CommentActivity.this, SearchFuntionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }

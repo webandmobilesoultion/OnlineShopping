@@ -3,18 +3,20 @@ package com.raoul.founditt;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -25,6 +27,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -35,6 +38,7 @@ import com.raoul.founditt.fragment.PhotoFragment;
 import com.raoul.founditt.fragment.RetailerFragment;
 import com.raoul.founditt.fragment.UserFragment;
 import com.raoul.founditt.listmodel.favourteitem;
+import com.soundcloud.android.crop.util.Log;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,13 +49,13 @@ import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 
-public class SearchActivity extends ActionBarActivity{
-
+public class SearchFuntionActivity extends ActionBarActivity{
     int size;
     int post;
     ProgressDialog mProgressDialog;
     EditText searchedit;
     Typeface font;
+    int selecflag=0;
     GridView gridView;
     List<ParseObject> ob;
     public List<favourteitem> data = null;
@@ -61,7 +65,7 @@ public class SearchActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         getSupportActionBar().hide();
-        mProgressDialog = new ProgressDialog(SearchActivity.this);
+        mProgressDialog = new ProgressDialog(SearchFuntionActivity.this);
         // Set progressdialog title
         mProgressDialog.setTitle("Message");
         // Set progressdialog message
@@ -70,8 +74,7 @@ public class SearchActivity extends ActionBarActivity{
         searchedit=(EditText)findViewById(R.id.search_editText);
         font = Typeface.createFromAsset(getAssets(), "Questrial-Regular.ttf");
         searchedit.setTypeface(font);
-        searchedit.setHintTextColor(Color.WHITE);
-        gridView=(GridView)findViewById(R.id.photo_gridView);
+        gridView=(GridView)findViewById(R.id.search_gridView);
 
 
 
@@ -82,7 +85,7 @@ public class SearchActivity extends ActionBarActivity{
             public void onClick(View v) {
 
                 Intent intent;
-                intent = new Intent(SearchActivity.this, HomeActivity.class);
+                intent = new Intent(SearchFuntionActivity.this, HomeActivity.class);
 
 
                 startActivity(intent);
@@ -99,7 +102,7 @@ public class SearchActivity extends ActionBarActivity{
             public void onClick(View v) {
 
                 Intent intent;
-                intent = new Intent(SearchActivity.this, HomeActivity.class);
+                intent = new Intent(SearchFuntionActivity.this, HomeActivity.class);
 
 
                 startActivity(intent);
@@ -114,7 +117,7 @@ public class SearchActivity extends ActionBarActivity{
             public void onClick(View v) {
 
                 Intent intent;
-                intent = new Intent(SearchActivity.this, CameraActivity.class);
+                intent = new Intent(SearchFuntionActivity.this, CameraActivity.class);
 
 
                 startActivity(intent);
@@ -128,7 +131,7 @@ public class SearchActivity extends ActionBarActivity{
             public void onClick(View v) {
 
                 Intent intent;
-                intent = new Intent(SearchActivity.this,AlarmActivity.class);
+                intent = new Intent(SearchFuntionActivity.this,AlarmActivity.class);
 
 
                 startActivity(intent);
@@ -142,7 +145,7 @@ public class SearchActivity extends ActionBarActivity{
             public void onClick(View v) {
 
                 Intent intent;
-                intent = new Intent(SearchActivity.this, FavouritsActivity.class);
+                intent = new Intent(SearchFuntionActivity.this, FavouritsActivity.class);
 
 
                 startActivity(intent);
@@ -152,26 +155,45 @@ public class SearchActivity extends ActionBarActivity{
 
 
 
-        searchedit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-//                    mProgressDialog.show();
-//
-//                    new RemoteDataTask().execute(searchedit.getText().toString());
-//                    searchedit.setText("");
-                    String searcheditstring=searchedit.getText().toString();
-                    loadphoto(searcheditstring);
-                }
-                return false;
+//        searchedit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+////                    mProgressDialog.show();
+////
+////                    new RemoteDataTask().execute(searchedit.getText().toString());
+//                      retailerFragment.loadretailer(searchedit.getText().toString());
+////                    searchedit.setText("");
+//                }
+//                return false;
+//            }
+//        });
+
+        searchedit.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String location = searchedit.getText().toString();
+
+                android.util.Log.d("Select Flage",Integer.toString(selecflag));
+
+
+                loadphoto(location);
+
+
+//                    new GeocoderTask().execute(location);
+
             }
         });
 
 
-
-
     }
-
-
 
     public void loadphoto(String retailer){
 
@@ -183,6 +205,7 @@ public class SearchActivity extends ActionBarActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+//            mProgressDialog.show();
 
 
         }
@@ -221,7 +244,7 @@ public class SearchActivity extends ActionBarActivity{
                     data.add(map);
                 }
             } catch (ParseException e) {
-                Log.e("Error", e.getMessage());
+                android.util.Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             return null;
@@ -232,7 +255,7 @@ public class SearchActivity extends ActionBarActivity{
             // Locate the listview in listview_main.xml
 
             // Pass the results into ListViewAdapter.java
-            adapter = new homeItemListAdapter(SearchActivity.this,
+            adapter = new homeItemListAdapter(SearchFuntionActivity.this,
                     data);
             // Binds the Adapter to the ListView
             gridView.setAdapter(adapter);
@@ -241,7 +264,7 @@ public class SearchActivity extends ActionBarActivity{
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     data.get(position).getImageID();
-                    Intent zoom = new Intent(SearchActivity.this, DetailsActivity.class);
+                    Intent zoom = new Intent(SearchFuntionActivity.this, DetailsActivity.class);
                     zoom.putExtra("photoID", data.get(position).getImageID());
                     startActivity(zoom);
                     // Toast.makeText(HomeActivity.this,worldpopulationlist.get(position).getID(),Toast.LENGTH_SHORT).show();
@@ -330,10 +353,5 @@ public class SearchActivity extends ActionBarActivity{
 
         }
     }
-
-
-
-
-
 
 }

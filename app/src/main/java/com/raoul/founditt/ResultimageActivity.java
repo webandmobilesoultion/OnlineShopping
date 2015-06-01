@@ -28,10 +28,12 @@ public class ResultimageActivity extends Activity {
     private String falg;
     private String classflag;
     Bitmap rotatedBitmap;
+    Bitmap smallbitmap;
     Bitmap galllerybitamp;
     byte[] saveData;
     Bitmap capturebitmap;
     ImageView resulimageveiw;
+    Matrix matrix;
     private static final int DEFAULT_ASPECT_RATIO_VALUES = 10;
     private static final int ROTATE_NINETY_DEGREES = 90;
     private static final String ASPECT_RATIO_X = "ASPECT_RATIO_X";
@@ -48,6 +50,7 @@ public class ResultimageActivity extends Activity {
         classflag=datagetintent.getStringExtra("class");
         falg = datagetintent.getStringExtra("changeflag");
         resulimageveiw=(ImageView)findViewById(R.id.result_imageView);
+        matrix=new Matrix();
 //        final CropImageView cropImageView = (CropImageView) findViewById(R.id.result_imageView);
 //        cropImageView.setFixedAspectRatio(true);
 //      //  cropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
@@ -88,15 +91,15 @@ public class ResultimageActivity extends Activity {
 
             if(falg.equals("1"))
             {
-                rotatedBitmap=getResizedBitmap(bitmap,480,640,-90);
-//                rotatedBitmap=getSmallBitmap(fileuri,480,640,100,-90);
-                //matrix.postRotate(-90);
+//                rotatedBitmap=getResizedBitmap(bitmap,480,640,-90);
+//                rotatedBitmap=getSmallBitmap(fileuri,240,320,100,-90);
+                matrix.postRotate(-90);
                 }
             else if(falg.equals("0"))
             {
-//                rotatedBitmap=getSmallBitmap(fileuri,480,640,100,90);
-                rotatedBitmap=getResizedBitmap(bitmap,480,640,90);
-//                matrix.postRotate(90);
+//                rotatedBitmap=getSmallBitmap(fileuri,240,320,100,90);
+//                rotatedBitmap=getResizedBitmap(bitmap,480,640,90);
+                matrix.postRotate(90);
             }
             int h=0;
             int w=0;
@@ -118,7 +121,7 @@ public class ResultimageActivity extends Activity {
 //                 rotatedBitmap = Bitmap.createBitmap(bitmap , 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 //            }
 
-//            rotatedBitmap=Bitmap.createBitmap(bitmap , 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            rotatedBitmap=Bitmap.createBitmap(bitmap , 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
 //            rotatedBitmap = Bitmap.createBitmap(capturebitmap , 0, 0, 120,160 , matrix, true);
             //Log.d("asdfasdfadfasdf", String.valueOf(bitmap.getWidth()+" ; "+bitmap.getHeight()));
@@ -280,6 +283,24 @@ public class ResultimageActivity extends Activity {
     }
 
     public  void  startactivity(){
+
+        smallbitmap=getSmallBitmap(fileuri,360,480,100,0);
+        File pictureFile=new File(fileuri);
+        if(pictureFile.exists()){
+            pictureFile.delete();
+            pictureFile=new File(fileuri);
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            smallbitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("TAG", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d("TAG", "Error accessing file: " + e.getMessage());
+        }
+
 
         String catagory=null;
         if(!(classflag ==null)){

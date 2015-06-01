@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,20 +14,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
-import com.parse.ParseACL;
 import com.parse.ParseFacebookUtils;
-import com.parse.ParseInstallation;
 import com.parse.SaveCallback;
 import com.raoul.founditt.ImageLoadPackge.FileCache;
 import com.raoul.founditt.ImageLoadPackge.ImageLoader;
@@ -40,16 +34,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.raoul.founditt.ImageLoadPackge.ImageLoaderGrid;
 import com.raoul.founditt.ImageLoadPackge.MemoryCache;
+import com.raoul.founditt.fragment.PortfolioActivity;
+import com.raoul.founditt.fragment.SavedActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -137,12 +129,11 @@ public class FavouritsActivity extends ActionBarActivity implements MaterialTabL
 
         }
         else if(!(image ==null)){
-            if (currentuser.get("facebook").equals("true")){
+            if (!(currentuser.get("facebook") ==null)){
                 Session session = ParseFacebookUtils.getSession();
                 if (session != null && session.isOpened()) {
                     makeMeRequest();
                 }
-
             }
             else {
 //                imageLoaderprofile.DisplayImage(image.getUrl(), userphoto_imageview);

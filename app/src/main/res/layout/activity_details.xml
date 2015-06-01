@@ -89,243 +89,234 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/top">
-
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/userphoto_details_imageView"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/man"
-                android:scaleType="centerCrop"
-                app:siBorderWidth="1dp"
-                app:siBorderColor="#b6818289"
-                android:layout_marginLeft="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/name_details_textView"
-                android:layout_toRightOf="@+id/userphoto_details_imageView"
-                android:layout_toEndOf="@+id/userphoto_details_imageView"
-                android:layout_marginLeft="5dp"
-                android:gravity="top"
-                android:layout_marginTop="5dp"
-                android:textSize="18dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/username_details_textView"
-                android:layout_alignBottom="@+id/userphoto_details_imageView"
-                android:layout_toRightOf="@+id/userphoto_details_imageView"
-                android:layout_toEndOf="@+id/userphoto_details_imageView"
-                android:textColor="#ff8d8487"
-                android:textSize="14dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="2dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/expierdate_details_textView"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:textSize="16dp" />
-            </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/bottom_f">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/info_icon"
-                android:layout_marginLeft="25dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/nike_details_textView"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageView2"
-                android:layout_toEndOf="@+id/imageView2"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="43dp"
-                android:textSize="17dp" />
-            </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:layout_above="@+id/bottom_f"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/bottom_s"
-            android:orientation="horizontal">
+            android:id="@+id/relativeLayout4">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/relativeLayout5">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageButton7"
-                    android:layout_alignParentStart="true"
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/userphoto_details_imageView"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/small_hearth"
-                    android:background="@null"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/man"
+                    android:scaleType="fitXY"
+                    app:siBorderWidth="1dp"
+                    app:siBorderColor="#b6818289"
+                    android:layout_marginLeft="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/name_hometextView"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="top"
+                    android:textSize="18dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_alignBottom="@+id/expierdate_hometextView"
+                    android:layout_toRightOf="@+id/userphoto_details_imageView"
+                    android:layout_toEndOf="@+id/userphoto_details_imageView" />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/expierdate_hometextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:textSize="16dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="365dp"
+                android:layout_below="@+id/relativeLayout5"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/relativeLayout9">
+
+
+
+
+
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="330dp"
+                    android:id="@+id/deal_imageView"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/information"
+                    android:scaleType="fitXY"
+                    android:layout_above="@+id/linearLayout2"
+                    app:siBorderWidth="1dp"
+                    app:siBorderColor="#fff7f7"
+                    app:siRadius="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/linearLayout2">
+                    <RelativeLayout
+                        android:layout_width="45dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="25dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="0"
+                            android:id="@+id/likenumber_hometextView"
+                            android:layout_alignParentStart="false"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/like_home_imageButton"
+                            android:src="@drawable/like_banner"
+                            android:background="@null"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/likenumber_hometextView"
+                            android:layout_toEndOf="@+id/likenumber_hometextView"
+                            android:layout_marginLeft="5dp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="0"
+                            android:id="@+id/commentnumber_hometextView"
+                            android:layout_alignParentStart="false"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/comment_home_imageButton"
+                            android:src="@drawable/comment"
+                            android:background="@null"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/commentnumber_hometextView"
+                            android:layout_toEndOf="@+id/commentnumber_hometextView"
+                            android:layout_marginLeft="5dp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginRight="15dp">
+
+                        <ImageButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:id="@+id/follow_home_imageButton"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/favourites"
+                            android:background="@null"
+                            android:layout_alignParentRight="false"
+                            android:scaleType="centerCrop"
+                            android:layout_marginRight="10dp" />
+                    </RelativeLayout>
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/share_home_imageButton"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/share_banner"
+                        android:background="@null"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_marginRight="20dp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/more_imageButton"
+                        android:src="@drawable/more"
+                        android:background="@null"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="65dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/relativeLayout9">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/info_icon"
                     android:layout_marginLeft="25dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="130 like"
-                    android:id="@+id/likenumber_details_textView"
-                    android:layout_toRightOf="@+id/imageButton7"
-                    android:layout_toEndOf="@+id/imageButton7"
-                    android:layout_centerVertical="true"
-                    android:textSize="15dp"
-                    android:layout_marginLeft="5dp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageButton8"
-                    android:layout_alignParentTop="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/comment_small"
-                    android:background="@null" />
+                    android:text="Medium Text"
+                    android:id="@+id/niketextView"
+                    android:layout_toRightOf="@+id/imageView2"
+                    android:layout_toEndOf="@+id/imageView2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="43dp"
+                    android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="45 COMMENT"
-                    android:id="@+id/commentnumber_details_extView"
-                    android:layout_toRightOf="@+id/imageButton8"
-                    android:layout_toEndOf="@+id/imageButton8"
-                    android:layout_centerVertical="true"
-                    android:textSize="15dp"
-                    android:layout_marginLeft="5dp" />
+                    android:text="Medium Text"
+                    android:id="@+id/Retailer_textView"
+                    android:layout_below="@+id/niketextView"
+                    android:layout_alignLeft="@+id/niketextView"
+                    android:layout_alignStart="@+id/niketextView"
+                    android:textSize="17dp"
+                    android:textColor="#ff8d8487" />
             </RelativeLayout>
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
-
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/more_details_imageButton"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/more"
-                    android:background="@null"
-                    android:layout_alignParentRight="false" />
-            </RelativeLayout>
-
-            </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/top"
-            android:layout_above="@+id/bottom_s">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/deal_details_imageView"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/information"
-                android:scaleType="centerCrop" />
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="80dp"
-                android:layout_height="250dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/like_details_imageButton"
-                    android:layout_weight="1"
-                    android:src="@drawable/hearth"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    android:layout_marginBottom="10dp" />
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/follow_details_imageButton"
-                    android:layout_weight="1"
-                    android:src="@drawable/favoer"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/share_details_imageButton"
-                    android:layout_weight="1"
-                    android:src="@drawable/share"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp" />
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/comment_details_imageButton"
-                    android:layout_weight="1"
-                    android:src="@drawable/comments"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
-            </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

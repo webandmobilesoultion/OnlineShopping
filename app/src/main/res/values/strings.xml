@@ -10,7 +10,6 @@
     <string name="tab_one_title">Tab One</string>
     <string name="tab_two_title">Tab Two</string>
     <string name="tab_three_title">Tab Three</string>
-
     <string name="content_one">Content one</string>
     <string name="content_two">Content two</string>
     <string name="content_three">Content three</string>
@@ -89,8 +88,10 @@
         <item quantity="one">%d year</item>
         <item quantity="other">%d years</item>
     </plurals>
-    <string name="banner_ad_unit_id">ca-app-pub-7340006778875243/6974705813</string>
 
+    <string name="banner_ad_unit_id">ca-app-pub-7340006778875243/6974705813</string>
     <string name="title_activity_details">DetailsActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_search_funtion">SearchFuntionActivity</string>
 
 </resources>

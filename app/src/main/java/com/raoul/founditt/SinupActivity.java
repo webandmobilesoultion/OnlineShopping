@@ -59,7 +59,9 @@ public class SinupActivity extends Activity {
         user.setPassword(password);
         user.setEmail(useremail);
         user.put("displayName",username);
+        user.put("name",username);
         user.put("notification","true");
+
        // user.setEmail("email@example.com");
 //
 //// other fields can be set just like with ParseObject

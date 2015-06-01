@@ -1,7 +1,9 @@
-package com.raoul.founditt;
+package com.raoul.founditt.fragment;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,9 +16,14 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.parse.GetCallback;
+import com.raoul.founditt.CommentActivity;
+import com.raoul.founditt.FavouritsActivity;
 import com.raoul.founditt.ImageLoadPackge.ImageLoader;
 import com.raoul.founditt.ImageLoadPackge.ImageLoaderGrid;
+import com.raoul.founditt.R;
 import com.raoul.founditt.listmodel.favourteitem;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -36,6 +43,7 @@ public class SavedActivity extends Fragment {
     GridView gridview;
     List<ParseObject> ob;
     View rootView;
+    ArrayList<String> follows;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -49,6 +57,7 @@ public class SavedActivity extends Fragment {
         rootView = inflater.inflate(R.layout.activity_saved, container, false);
 //        activity = (TextTabActivity) getActivity();
         gridview=(GridView)rootView.findViewById(R.id.save_gridView);
+        follows = new ArrayList<String>();
         return rootView;
     }
 
@@ -85,7 +94,7 @@ public class SavedActivity extends Fragment {
                     final favourteitem map = new favourteitem();
 
                     map.setImageID(photo.getObjectId());
-
+                    map.setFollowID(country.getObjectId());
 
                     map.setInmageurl(image.getUrl());
 
@@ -126,10 +135,87 @@ public class SavedActivity extends Fragment {
 //                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }
             });
+            gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
+
+
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Unfollow Photo")
+                            .setMessage("Are you sure you want to unfollow?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Follow");
+                                    query.getInBackground(data.get(position).getFollowID(), new GetCallback<ParseObject>() {
+                                                public void done(ParseObject country, ParseException e) {
+                                                    if (e == null) {
+
+
+                                                        try {
+                                                            country.delete();
+                                                        } catch (ParseException e1) {
+                                                            e1.printStackTrace();
+                                                        }
+
+
+
+//
+
+                                                    }
+                                                }
+                                            }
+                                    );
+
+
+                                    ParseQuery<ParseObject> followquery = ParseQuery.getQuery("Photo");
+                                    followquery.getInBackground(data.get(position).getImageID(), new GetCallback<ParseObject>() {
+                                                public void done(ParseObject country, ParseException e) {
+                                                    if (e == null) {
+
+
+                                                        if (!(country.get("userfollow") == null)) {
+                                                            follows = (ArrayList<String>) country.get("userfollow");
+                                                        }
+                                                        ParseUser likeuser = ParseUser.getCurrentUser();
+                                                        follows.remove(likeuser.getObjectId());
+                                                        country.put("userfollow", follows);
+
+                                                        try {
+                                                            country.save();
+                                                        } catch (ParseException ee) {
+                                                            ee.printStackTrace();
+                                                        }
+//
+
+                                                    }
+                                                }
+                                            }
+                                    );
+
+
+
+
+                                    new RemoteDataTask().execute();
+
+                                     // continue with delete
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+
+
+                    return true;
+                }
+            });
             // Close the progressdialog
             mProgressDialog.dismiss();
         }
-    }
+                }
 
 
     public class homeItemListAdapter extends BaseAdapter {

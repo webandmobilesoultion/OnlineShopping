@@ -256,7 +256,7 @@ public class ProductEnter extends Activity {
                         tweetIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(fileuri)));
                         tweetIntent.setType("image/*");
                         PackageManager pm = ProductEnter.this.getPackageManager();
-                        List<ResolveInfo> lract = pm.queryIntentActivities(tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                        List<ResolveInfo> lract =pm.queryIntentActivities(tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
                         boolean resolved = false;
                         for (ResolveInfo ri : lract) {
                             if (ri.activityInfo.name.contains("facebook")) {
@@ -409,7 +409,7 @@ public class ProductEnter extends Activity {
 
                     // Add the image
                     photo.setImage( image );
-                    Log.d("adfadfadsasdfadfadsfdafsßfaasswddaasaæ",ParseUser.getCurrentUser().getUsername());
+//                    Log.d("adfadfadsasdfadfadsfdafsßfaasswddaasaæ",ParseUser.getCurrentUser().getUsername());
                     // Add the thumbnail
                     photo.setLike("12");
                     photo.setCategory(catagory);

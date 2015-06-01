@@ -30,6 +30,16 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/complete"
             android:background="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Select a location"
+            android:id="@+id/search_title_textView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fffff4ff" />
     </RelativeLayout>
 
     <RelativeLayout

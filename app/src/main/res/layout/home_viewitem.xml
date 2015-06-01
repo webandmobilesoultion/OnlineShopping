@@ -29,7 +29,7 @@
                 android:src="@drawable/man"
                 android:scaleType="fitXY"
                 app:siBorderWidth="1dp"
-                app:siBorderColor="#b6818289"
+                app:siBorderColor="#fff6f8ff"
                 android:layout_marginLeft="20dp" />
 
             <TextView
@@ -38,26 +38,15 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/name_hometextView"
-                android:layout_toRightOf="@+id/userphoto_details_imageView"
-                android:layout_toEndOf="@+id/userphoto_details_imageView"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:gravity="top"
-                android:layout_marginTop="5dp"
-                android:textSize="18dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/username_hometextView"
-                android:layout_alignBottom="@+id/userphoto_details_imageView"
+                android:textSize="18dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/expierdate_hometextView"
                 android:layout_toRightOf="@+id/userphoto_details_imageView"
-                android:layout_toEndOf="@+id/userphoto_details_imageView"
-                android:textColor="#ff8d8487"
-                android:textSize="14dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="2dp" />
+                android:layout_toEndOf="@+id/userphoto_details_imageView" />
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -87,15 +76,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:id="@+id/deal_imageView"
-                android:layout_centerHorizontal="true"
                 android:src="@drawable/information"
                 android:scaleType="fitXY"
-                android:layout_above="@+id/linearLayout2"
-                app:siBorderWidth="2dp"
-                app:siBorderColor="#ff888181"
+                app:siBorderWidth="1dp"
+                app:siBorderColor="#fff7f7"
                 app:siRadius="3dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_above="@+id/linearLayout2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -218,7 +206,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:src="@drawable/info_icon"
-                android:layout_marginLeft="25dp" />
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:layout_width="wrap_content"

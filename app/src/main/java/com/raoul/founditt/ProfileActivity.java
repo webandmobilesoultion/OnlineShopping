@@ -110,7 +110,7 @@ public class ProfileActivity extends Activity {
         TextView privacetitle=(TextView)findViewById(R.id.privacytextView);
         privacetitle.setTypeface(font);
         logoutbut=(ImageButton)findViewById(R.id.logout_imageButton);
-        upgradebut=(ImageButton)findViewById(R.id.upgrade_imageButton);
+//        upgradebut=(ImageButton)findViewById(R.id.upgrade_imageButton);
         TextView feedtitle=(TextView)findViewById(R.id.feedback_textView);
         feedtitle.setTypeface(font);
         feedback_imagebut=(ImageButton)findViewById(R.id.feedback_imageButton);
@@ -216,86 +216,86 @@ public class ProfileActivity extends Activity {
 //        });
 
 
-        upgradebut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setProgressDialog( ProgressDialog.show(ProfileActivity.this, "",
-                        "uploading  data ...", true, true) );
-
-
-//                if(!(fileuri ==null)){
-//                    BitmapFactory.Options options = new BitmapFactory.Options();
-//                    bitmap = BitmapFactory.decodeFile(fileuri,
-//                            options);
+//        upgradebut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setProgressDialog( ProgressDialog.show(ProfileActivity.this, "",
+//                        "uploading  data ...", true, true) );
 //
-//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-//                    saveData = bos.toByteArray();
+//
+////                if(!(fileuri ==null)){
+////                    BitmapFactory.Options options = new BitmapFactory.Options();
+////                    bitmap = BitmapFactory.decodeFile(fileuri,
+////                            options);
+////
+////                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+////                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+////                    saveData = bos.toByteArray();
+////                }
+//
+//
+//                if(notivication_switch.isChecked()){
+//                    check_state="true";
 //                }
-
-
-                if(notivication_switch.isChecked()){
-                    check_state="true";
-                }
-                else {
-                    check_state="false";
-                }
-
-
-
-                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-
-
-                installation.put("notification", check_state);
-
-
-
-                installation.saveInBackground();
-                ParseUser user = ParseUser.getCurrentUser();
-                user.put("name",name_edit.getText().toString());
-                user.setEmail(email_edit.getText().toString());
-                user.put("notification",check_state);
-                if (!(currentuser.get("facebookId") ==null)){
-
-                    if(facebook_switch.isChecked()){
-                        facebook_checkstate="true";
-                    }
-                    else {
-                        facebook_checkstate="false";
-                    }
-                    user.put("facebook",facebook_checkstate);
-                }
-                user.put("displayName",displayname_eidt.getText().toString());
-//               if(!(saveData ==null)){
-//                    image = new ParseFile("photo.jpg", saveData);
+//                else {
+//                    check_state="false";
+//                }
 //
-//                       image.saveInBackground();
 //
-//                   user.put("userphoto",image);
-//               }
-//               else {
-//                   user.put("userphoto",userphoto);
-//              }
-                user.saveInBackground(new SaveCallback() {
-
-                    @Override
-                    public void done(ParseException e) {
-                        getProgressDialog().dismiss();
-                       Intent intent=new Intent(ProfileActivity.this,FavouritsActivity.class);
-                        //intent.putExtra("serchresult",fileuri);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                        if (e == null) {
-
-                        } else {
-
-                        }
-                    }
-
-                });
-
-            }
-        });
+//
+//                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+//
+//
+//                installation.put("notification", check_state);
+//
+//
+//
+//                installation.saveInBackground();
+//                ParseUser user = ParseUser.getCurrentUser();
+//                user.put("name",name_edit.getText().toString());
+//                user.setEmail(email_edit.getText().toString());
+//                user.put("notification",check_state);
+//                if (!(currentuser.get("facebookId") ==null)){
+//
+//                    if(facebook_switch.isChecked()){
+//                        facebook_checkstate="true";
+//                    }
+//                    else {
+//                        facebook_checkstate="false";
+//                    }
+//                    user.put("facebook",facebook_checkstate);
+//                }
+//                user.put("displayName",displayname_eidt.getText().toString());
+////               if(!(saveData ==null)){
+////                    image = new ParseFile("photo.jpg", saveData);
+////
+////                       image.saveInBackground();
+////
+////                   user.put("userphoto",image);
+////               }
+////               else {
+////                   user.put("userphoto",userphoto);
+////              }
+//                user.saveInBackground(new SaveCallback() {
+//
+//                    @Override
+//                    public void done(ParseException e) {
+//                        getProgressDialog().dismiss();
+//                       Intent intent=new Intent(ProfileActivity.this,FavouritsActivity.class);
+//                        //intent.putExtra("serchresult",fileuri);
+//                        startActivity(intent);
+//                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+//                        if (e == null) {
+//
+//                        } else {
+//
+//                        }
+//                    }
+//
+//                });
+//
+//            }
+//        });
 
         saveimagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
